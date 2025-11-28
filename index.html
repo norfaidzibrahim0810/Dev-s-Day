@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Devs! 🥳</title>
+    <style>
+        /* --- CSS Styling Section --- */
+        body {
+            font-family: 'Georgia', serif;
+            text-align: center;
+            background-color: #fce4ec; /* Soft pink background */
+            color: #333;
+            padding-top: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #e91e63; /* Pink header */
+            margin-bottom: 15px;
+        }
+
+        .celebrant-image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 50px;
+            border: 5px solid #ffcc80; /* Light orange/gold border */
+        }
+
+        .celebrant-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- Cake and Candle Styling --- */
+
+        .cake-container {
+            width: 200px;
+            height: 120px;
+            background: #ffb74d; /* Cake color (orange frosting) */
+            border-radius: 5px 5px 40px 40px;
+            margin: 30px auto;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .cake-container::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            right: 10px;
+            height: 10px;
+            background: #f48fb1; /* Cake top/drip color */
+            border-radius: 5px;
+        }
+
+        .candle {
+            width: 8px;
+            height: 30px;
+            background: white;
+            position: absolute;
+            top: -25px;
+            border-radius: 2px;
+            z-index: 10;
+            display: none; /* Initially hidden */
+            box-shadow: 0 0 2px rgba(0,0,0,0.3);
+        }
+
+        #candle1 { left: 50px; }
+        #candle2 { left: 95px; }
+        #candle3 { left: 140px; }
+
+        .flame {
+            width: 6px;
+            height: 12px;
+            background-color: yellow;
+            border-radius: 50% 50% 30% 30%;
+            position: absolute;
+            top: -37px;
+            opacity: 0; /* Initially hidden */
+            box-shadow: 0 0 5px 2px orange;
+            transition: opacity 0.5s ease;
+            z-index: 11;
+        }
+
+        #flame1 { left: 51px; }
+        #flame2 { left: 96px; }
+        #flame3 { left: 141px; }
+
+        /* Animation for the flame */
+        .flame.lit {
+            opacity: 1;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scaleY(1); opacity: 1; }
+            100% { transform: scaleY(0.95); opacity: 0.9; box-shadow: 0 0 4px 1px orange; }
+        }
+
+        /* Blow out effect */
+        .flame.blown-out {
+            opacity: 0 !important;
+            animation: none;
+        }
+
+        /* Message styling */
+        #message-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px dashed #e91e63;
+        }
+
+        #message-section h2 {
+            color: #e91e63;
+        }
+
+        #message-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .instruction {
+            font-style: italic;
+            color: #777;
+        }
+
+        #blow-prompt {
+            color: #e91e63;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>A Special Birthday Wish for Devine!</h1>
+            <div class="celebrant-image-container">
+                <img src="C:\Users\Norfaidz Ibrahim\Documents\Dev's Day\498979934_2769602323233960_4232603129012279869_n.jpg" alt="Ange - The Birthday Girl">
+            </div>
+        </header>
+
+        <section id="candle-section">
+            <p class="instruction">Click the **cake** to light the candles and play the music!</p>
+            <div class="cake-container" id="cake" onclick="lightCandles()">
+                <div class="candle" id="candle1"></div>
+                <div class="candle" id="candle2"></div>
+                <div class="candle" id="candle3"></div>
+                <div class="flame" id="flame1"></div>
+                <div class="flame" id="flame2"></div>
+                <div class="flame" id="flame3"></div>
+            </div>
+            <p id="blow-prompt" style="display: none;">**MAKE A WISH!** Now blow out the candles (by clicking the flames!)</p>
+        </section>
+
+        <section id="message-section" style="display: none;">
+            <h2>Your Special Message:</h2>
+            <p>
+                **To Dev,** <br><br>
+                Happy Birthday sayo! I hope this year mag enjoy ka na lalo sa mga ginagawa mo and maging masaya and makuha mo yung mga gusto mo. Pasensya kung di na ako nakapag update or repl sayo, i know you are busy and naisip ko baka nakakaistorbo na ako. <br>
+                Happy Birthday! ❤️<br><br>
+                — Your Friend
+            </p>
+        </section>
+
+    </div>
+
+    <audio id="hbd-song" src="C:\Users\Norfaidz Ibrahim\Documents\Dev's Day\Happy Birthday to You - piano instrumental with lyrics.mp3" preload="auto"></audio> 
+    
+    <script>
+        /* --- JavaScript Logic Section --- */
+        const flames = [
+            document.getElementById('flame1'),
+            document.getElementById('flame2'),
+            document.getElementById('flame3')
+        ];
+        const candles = [
+            document.getElementById('candle1'),
+            document.getElementById('candle2'),
+            document.getElementById('candle3')
+        ];
+        const blowPrompt = document.getElementById('blow-prompt');
+        const messageSection = document.getElementById('message-section');
+        const hbdSong = document.getElementById('hbd-song');
+        let allCandlesLit = false;
+        let blownOutCount = 0;
+
+        // Function to light the candles and start the music
+        function lightCandles() {
+            if (allCandlesLit) return; 
+
+            // Play music (will only work if the MP3 is found)
+            hbdSong.play().catch(error => {
+                console.log("Music failed to play (might be blocked by browser or file missing):", error);
+            }); 
+
+            // Show candles and light the flames
+            candles.forEach(candle => candle.style.display = 'block');
+            flames.forEach(flame => {
+                flame.classList.add('lit');
+                // Make flames clickable to simulate blowing out
+                flame.onclick = blowOutCandle;
+            });
+
+            blowPrompt.style.display = 'block';
+            document.querySelector('.instruction').style.display = 'none';
+
+            allCandlesLit = true;
+        }
+
+        // Function to handle blowing out a single candle
+        function blowOutCandle(event) {
+            if (!allCandlesLit) return;
+
+            const flame = event.target;
+            if (flame.classList.contains('blown-out')) return; 
+
+            flame.classList.remove('lit');
+            flame.classList.add('blown-out');
+            flame.onclick = null; 
+            blownOutCount++;
+
+            // Check if all candles are out
+            if (blownOutCount === flames.length) {
+                hbdSong.pause();
+                hbdSong.currentTime = 0; // Rewind song
+                blowPrompt.textContent = "WISH GRANTED! 🎉";
+                
+                // Delay before showing the message
+                setTimeout(() => {
+                    messageSection.style.display = 'block';
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // Scroll down
+                }, 1000); 
+            }
+        }
+    </script>
+</body>
+</html>
